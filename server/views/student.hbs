@@ -1,0 +1,68 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-6" style="margin-bottom: 20px;">
+            <h2 style="color:teal">Students</h2>
+
+        </div>
+
+        <div class="col-sm-6 text-right">
+
+            <button type="button" class="btn btn-info" onclick="goToAdd()">Adding</button>
+
+        </div>
+    </div>
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Image</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each listTable}}
+
+            <tr>
+                <td scope="row">{{this.name}}</td>
+                <td>{{this.salary}}$</td>
+                <td class="align-middle" onclick="goToAllItem()"><img style="cursor: pointer;"
+                        src="http://localhost:3000/images/{{this.image}}" width="auto" height="150" alt="">
+                </td>
+                <td class="text-right">
+                    {{!-- <button type="button" class="btn btn-success" onclick="goToEdit('{{this._id}}')">Edit</button> --}}
+                    <button type="button" class="btn btn-success">Edit</button>
+                    <button type="button" class="btn btn-danger" onclick="removeData('{{this._id}}')">Delete</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+</div>
+
+
+</body>
+<script>
+
+    function goToAdd() {
+        window.location.href = '/student/add-student'
+    }
+    function goToEdit(id) {
+        window.location.href = '/student/edit-student/' + id
+    }
+    function removeData(id) {
+        $.ajax({
+            type: "DELETE",
+            url: '/student/delete/' + id,
+            success: function (data) {
+                if (data.res == true) {
+                    window.location.href = '/student'
+                }
+            }
+        });
+    }
+</script>
