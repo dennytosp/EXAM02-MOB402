@@ -25,7 +25,7 @@ exports.edit = async function editStudent(stud) {
     }
     studEdit.salary = stud.salary;
   }
-  await studEdit.save()
+  return await studEdit.save();
 };
 
 exports.remove = async function removeStudentById(id) {

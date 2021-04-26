@@ -23,6 +23,7 @@ exports.addNew = async function addNewStudent(params) {
 exports.edit = async function editStudent(id, params) {
     let { name, image, salary } = params;
     let stud = {
+    id,
     name,
     image,
     salary,

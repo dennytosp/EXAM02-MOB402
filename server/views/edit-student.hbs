@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6" style="margin-bottom: 20px">
+            <h2 style="color: teal">Form Editing</h2>
+        </div>
+        <div class="col-sm-6 text-right">
+            <button type="button" class="btn btn-dark" onclick="goBack()">
+                Go back
+            </button>
+        </div>
+    </div>
+
+    <form action="/student/edit-student/{{studGetData._id}}" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Input ur name to need ..." name="name"
+                value="{{studGetData.name}}" />
+        </div>
+
+        <div class="form-group">
+            <label for="salary">Salary</label>
+            <input type="text" class="form-control" id="salary" placeholder="Input ur salary to need ..."
+                value="{{studGetData.salary}}" name="salary" />
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-form-label">Image</label>
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" name="image" />
+                    <label class="custom-file-label" for="img">Choose
+                        file</label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-danger" id="btn">Submit</button>
+        <div class="form-group">
+            <div style="margin-top: 25px" class="form-group">
+                <div class="text-left"><img width="200" height="200" style="border-radius: 5px;"
+                        src="http://localhost:3000/images/{{studGetData.image}}" alt="" id="showImg"></div>
+            </div>
+    </form>
+</div>
+
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader()
+            reader.onload = function (e) {
+                $('#showImg').attr('src', e.target.result)
+                $("#showImg").removeClass("d-none");
+
+            }
+            reader.readAsDataURL(input.files[0])
+        }
+    }
+
+
+    $("#image").change(function () {
+        readURL(this)
+    })
+
+    function goBack() {
+        window.location.href = "/";
+    }
+</script>

@@ -4,12 +4,11 @@ var upload = require("../utilities/upload");
 var middle = [upload.single("image")];
 var studentController = require("../controllers/studentController");
 
-
 router.get("/stud", async function (req, res, next) {
-    let stud = await studentController.getListStudent();
-    res.json(stud);
-  });
-  
+  let stud = await studentController.getListStudent();
+  res.json(stud);
+});
+
 /* GET home page. */
 router.get("/", async function (req, res, next) {
   let list = await studentController.getListStudent();
@@ -33,13 +32,32 @@ router.post("/add-student", middle, async function (req, res, next) {
 });
 
 // Delete Student
-router.delete(
-    "/delete/:id",
-    async function (req, res, next) {
-      let id = req.params.id;
-      await studentController.remove(id);
-      res.send({ res: true });
-    }
-  );
-  
+router.delete("/delete/:id", async function (req, res, next) {
+  let id = req.params.id;
+  await studentController.remove(id);
+  res.send({ res: true });
+});
+
+// GET Data từ Table lên Form Edit (Student)
+router.get("/edit-student/:id", async function (req, res, next) {
+  let id = req.params.id;
+  let stud = await studentController.getStudentById(id);
+  res.render("edit-student", {
+    studGetData: stud,
+    title: "Edit Student",
+  });
+});
+
+// Hàm chỉnh sửa Student
+router.post("/edit-student/:id", middle, async function (req, res, next) {
+  let { id } = req.params;
+  let { body } = req;
+  if (req.file) {
+    let imgUrl = req.file.originalname;
+    body = { ...body, image: imgUrl };
+  }
+  await studentController.edit(id, body);
+  res.redirect("/student");
+});
+
 module.exports = router;
